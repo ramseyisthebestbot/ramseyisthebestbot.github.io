@@ -207,13 +207,14 @@ function frame(ts) {
 }
 
 window.addEventListener('keydown', (e) => {
-  if (e.key === 'a' || e.key === 'ArrowLeft') keys.left = true;
-  if (e.key === 'd' || e.key === 'ArrowRight') keys.right = true;
-  if (e.key === 'w' || e.key === 'ArrowUp' || e.key === ' ') {
+  const k = (e.key || '').toLowerCase();
+  if (k === 'a' || e.key === 'ArrowLeft') keys.left = true;
+  if (k === 'd' || e.key === 'ArrowRight') keys.right = true;
+  if (k === 'w' || e.key === 'ArrowUp' || e.key === ' ') {
     keys.jump = true;
     e.preventDefault();
   }
-  if (e.key.toLowerCase() === 'r') {
+  if (k === 'r') {
     spawn = { x: 80, y: 440 };
     snarkSigns.forEach((s) => { s.hit = false; });
     resetGame(true);
@@ -221,9 +222,10 @@ window.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('keyup', (e) => {
-  if (e.key === 'a' || e.key === 'ArrowLeft') keys.left = false;
-  if (e.key === 'd' || e.key === 'ArrowRight') keys.right = false;
-  if (e.key === 'w' || e.key === 'ArrowUp' || e.key === ' ') keys.jump = false;
+  const k = (e.key || '').toLowerCase();
+  if (k === 'a' || e.key === 'ArrowLeft') keys.left = false;
+  if (k === 'd' || e.key === 'ArrowRight') keys.right = false;
+  if (k === 'w' || e.key === 'ArrowUp' || e.key === ' ') keys.jump = false;
 });
 
 resetGame(true);
