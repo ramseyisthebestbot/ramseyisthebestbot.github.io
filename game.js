@@ -116,9 +116,9 @@ const LEVELS = [
       { x: 3700, y: 500, w: 300, h: 40 },
     ],
     windZones: [
-      { x: 760, y: 180, w: 300, h: 260, forceX: -320 },
-      { x: 1550, y: 130, w: 380, h: 300, forceX: 340 },
-      { x: 2550, y: 120, w: 420, h: 320, forceX: -360 },
+      { x: 760, y: 180, w: 300, h: 260, forceX: -170 },
+      { x: 1550, y: 130, w: 380, h: 300, forceX: 185 },
+      { x: 2550, y: 120, w: 420, h: 320, forceX: -195 },
     ],
     hazards: [
       { x: 430, y: 500, w: 90, h: 40 },
@@ -301,7 +301,9 @@ function activeLaserHazards(lvl, tMs) {
 function applyWind(lvl, dt) {
   if (!lvl.windZones) return;
   for (const wz of lvl.windZones) {
-    if (overlap(player, wz)) player.x += wz.forceX * dt;
+    if (!overlap(player, wz)) continue;
+    const groundDamping = player.onGround ? 0.6 : 1;
+    player.x += wz.forceX * dt * groundDamping;
   }
 }
 
