@@ -490,13 +490,14 @@ function frame(ts) {
 
 window.addEventListener('keydown', (e) => {
   const k = (e.key || '').toLowerCase();
-  if (k === 'a' || e.key === 'ArrowLeft') keys.left = true;
-  if (k === 'd' || e.key === 'ArrowRight') keys.right = true;
-  if (k === 'w' || e.key === 'ArrowUp' || e.key === ' ') {
+  const code = e.code || '';
+  if (k === 'a' || e.key === 'ArrowLeft' || code === 'KeyA') keys.left = true;
+  if (k === 'd' || e.key === 'ArrowRight' || code === 'KeyD') keys.right = true;
+  if (k === 'w' || e.key === 'ArrowUp' || e.key === ' ' || code === 'KeyW') {
     keys.jump = true;
     e.preventDefault();
   }
-  if (k === 'r') {
+  if (k === 'r' || code === 'KeyR') {
     currentLevel = 0;
     resetLevel(true);
   }
@@ -504,9 +505,10 @@ window.addEventListener('keydown', (e) => {
 
 window.addEventListener('keyup', (e) => {
   const k = (e.key || '').toLowerCase();
-  if (k === 'a' || e.key === 'ArrowLeft') keys.left = false;
-  if (k === 'd' || e.key === 'ArrowRight') keys.right = false;
-  if (k === 'w' || e.key === 'ArrowUp' || e.key === ' ') keys.jump = false;
+  const code = e.code || '';
+  if (k === 'a' || e.key === 'ArrowLeft' || code === 'KeyA') keys.left = false;
+  if (k === 'd' || e.key === 'ArrowRight' || code === 'KeyD') keys.right = false;
+  if (k === 'w' || e.key === 'ArrowUp' || e.key === ' ' || code === 'KeyW') keys.jump = false;
 });
 
 resetLevel(true);
