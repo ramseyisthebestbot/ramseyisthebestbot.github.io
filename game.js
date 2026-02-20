@@ -7,6 +7,7 @@ import {
   canJump,
   hitHazard,
   reachedGoal,
+  applyPlatformMotion,
 } from './game-logic.js';
 
 const canvas = document.getElementById('game');
@@ -73,6 +74,7 @@ const LEVELS = [
       { x: 650, y: 470, w: 180, h: 24 },
       { x: 1420, y: 440, w: 200, h: 24 },
       { x: 2050, y: 410, w: 210, h: 24 },
+      { x: 3180, y: 360, w: 160, h: 24 },
       { x: 3360, y: 500, w: 500, h: 40 },
     ],
     movingPlatforms: [
@@ -261,9 +263,10 @@ function updateLives() {
 function dynamicPlatforms(lvl, tMs) {
   const out = [...lvl.platforms];
   if (lvl.movingPlatforms) {
-    for (const p of lvl.movingPlatforms) {
+    for (const [idx, p] of lvl.movingPlatforms.entries()) {
       const delta = Math.sin((tMs / 1000) * p.speed + p.phase) * p.range;
       out.push({
+        id: p.id ?? `m${idx}`,
         x: p.axis === 'x' ? p.x + delta : p.x,
         y: p.axis === 'y' ? p.y + delta : p.y,
         w: p.w,
@@ -328,6 +331,7 @@ function update(dt) {
   if (won || lives <= 0) return;
 
   const lvl = level();
+  const prevTimeMs = levelTimeMs;
   levelTimeMs += dt * 1000;
 
   player = applyInput(player, keys);
@@ -340,8 +344,11 @@ function update(dt) {
   applyWind(lvl, dt);
   player = clampToWorld(player, { ...WORLD, width: lvl.worldWidth });
 
+  const previousPlatforms = dynamicPlatforms(lvl, prevTimeMs);
   const activePlatforms = dynamicPlatforms(lvl, levelTimeMs);
   player = resolvePlatforms(player, activePlatforms);
+  player = applyPlatformMotion(player, previousPlatforms, activePlatforms);
+  player = clampToWorld(player, { ...WORLD, width: lvl.worldWidth });
 
   if (player.y > RESPAWN_Y_LIMIT) respawn('Gravity submitted a bug report with your name on it.');
 

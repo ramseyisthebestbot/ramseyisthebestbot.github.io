@@ -9,6 +9,8 @@ import {
   canJump,
   hitHazard,
   reachedGoal,
+  findRidingPlatform,
+  applyPlatformMotion,
 } from './game-logic.js';
 
 test('rectsOverlap detects overlap correctly', () => {
@@ -51,4 +53,16 @@ test('hazard and goal detection', () => {
   const p = { x: 50, y: 50, w: 20, h: 20 };
   assert.equal(hitHazard(p, [{ x: 40, y: 40, w: 20, h: 20 }]), true);
   assert.equal(reachedGoal(p, { x: 200, y: 200, w: 10, h: 10 }), false);
+});
+
+test('riding platform detection + carry motion', () => {
+  const player = { x: 120, y: 70, w: 20, h: 20 };
+  const prev = [{ id: 'm1', x: 100, y: 100, w: 80, h: 10, moving: true }];
+  const curr = [{ id: 'm1', x: 130, y: 90, w: 80, h: 10, moving: true }];
+
+  const ride = findRidingPlatform(player, curr);
+  assert.ok(ride);
+  const moved = applyPlatformMotion(player, prev, curr);
+  assert.equal(moved.x, 150); // +30
+  assert.equal(moved.y, 60);  // -10
 });

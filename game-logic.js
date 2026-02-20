@@ -70,3 +70,23 @@ export function hitHazard(player, hazards) {
 export function reachedGoal(player, goal) {
   return rectsOverlap(player, goal);
 }
+
+export function findRidingPlatform(player, platforms) {
+  return platforms.find((p) => {
+    const feetOnTop = Math.abs((player.y + player.h) - p.y) < 2;
+    const overlapX = player.x + player.w > p.x + 2 && player.x < p.x + p.w - 2;
+    return feetOnTop && overlapX;
+  }) || null;
+}
+
+export function applyPlatformMotion(player, previousPlatforms, currentPlatforms) {
+  const riding = findRidingPlatform(player, currentPlatforms.filter((p) => p.moving));
+  if (!riding || !riding.id) return player;
+  const prev = previousPlatforms.find((p) => p.id === riding.id);
+  if (!prev) return player;
+  return {
+    ...player,
+    x: player.x + (riding.x - prev.x),
+    y: player.y + (riding.y - prev.y),
+  };
+}
