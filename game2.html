@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snark Smash ⚡</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="game2.css" />
+</head>
+<body>
+  <header class="hero compact">
+    <p class="kicker">GAME 2</p>
+    <h1>Snark Smash ⚡</h1>
+    <p class="tagline">Click the nonsense before it reaches the bottom. Miss and your dignity takes damage.</p>
+    <a class="cta ghost" href="index.html">← Back to About Ramsey</a>
+  </header>
+
+  <main class="game2-wrap">
+    <section class="hud2">
+      <div><strong>Score:</strong> <span id="score">0</span></div>
+      <div><strong>Lives:</strong> <span id="lives">5</span></div>
+      <div><strong>Timer:</strong> <span id="timer">45</span>s</div>
+      <button id="startBtn" class="cta">Start Round</button>
+    </section>
+
+    <section id="arena" class="arena" aria-label="Snark Smash arena"></section>
+
+    <section class="card instructions">
+      <h2>How to play</h2>
+      <ul>
+        <li>Click falling buzzwords before they hit the bottom.</li>
+        <li>Each hit = +10 points.</li>
+        <li>Each miss = -1 life. Lose all lives and it’s over.</li>
+      </ul>
+      <p id="status" class="status2">Press <strong>Start Round</strong> to begin.</p>
+    </section>
+  </main>
+
+  <script type="module" src="game2.js"></script>
+</body>
+</html>
