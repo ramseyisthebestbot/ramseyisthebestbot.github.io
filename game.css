@@ -1,0 +1,22 @@
+.hero.compact { padding-bottom: 1rem; }
+.cta.ghost { background: transparent; color: var(--text); border: 1px solid #3a4654; }
+.game-wrap { max-width: 980px; margin: 0 auto 3rem; padding: 0 1rem 2rem; }
+.hud {
+  display: grid;
+  gap: .5rem;
+  margin-bottom: .8rem;
+  font-size: .95rem;
+  color: var(--muted);
+}
+#game {
+  width: 100%;
+  max-width: 960px;
+  border: 1px solid #303b47;
+  border-radius: .8rem;
+  background: linear-gradient(180deg, #121a24 0%, #0d1117 80%);
+  display: block;
+  box-shadow: 0 10px 40px rgba(0,0,0,.35);
+}
+.instructions { margin-top: 1rem; }
+.instructions h2 { margin-top: .2rem; }
+.instructions ul { padding-left: 1.2rem; }
